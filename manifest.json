@@ -1,0 +1,14 @@
+{
+  "name": "Please Save My Tabs",
+  "version": "0.1",
+  "description": "Please Save My Tabs",
+  "permissions": ["activeTab", "declarativeContent", "storage", "tabs"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}
