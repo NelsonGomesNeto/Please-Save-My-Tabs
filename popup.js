@@ -20,20 +20,30 @@ chrome.storage.local.get({ windowsSnapshots: [] }, function (data) {
     }
     tabs += ")";
     lines += "<td><button id='ws" + i + "'>" + windowsSnapshots[i].length + " windows " + tabs + " </button></td>";
+    lines += "<td><button id='cp" + i + "'>Copy</button></td>";
+    lines += "<td><button id='prv" + i + "'>Preview</button></td>";
     lines += "</tr>";
   }
 
   windowsSnapshotsTable.innerHTML += lines;
 
   for (var i = 0; i < windowsSnapshots.length; i++) {
-    let button = document.getElementById("ws" + i);
-    function lol(idx) {
-      button.addEventListener('click', () => {
+    let openWindowsButton = document.getElementById("ws" + i);
+    let copyButton = document.getElementById("cp" + i);
+    let previewButton = document.getElementById("prv" + i);
+
+    function lol(idx, obtn, cbtn, prvbtn) {
+      obtn.addEventListener('click', () => {
         openWindows(idx);
-        // addTextToClipboard(idx);
+      });
+      cbtn.addEventListener('click', () => {
+        addTextToClipboard(idx);
+      });
+      prvbtn.addEventListener('click', () => {
+        previewSnapshot(idx);
       });
     };
-    lol(i);
+    lol(i, openWindowsButton, copyButton, previewButton);
   }
 });
 
@@ -43,5 +53,8 @@ function openWindows(idx) {
   }
 }
 function addTextToClipboard(idx) {
-  navigator.clipboard.writeText(JSON.stringify(windowsSnapshots[idx]));
+  navigator.clipboard.writeText(JSON.stringify(windowsSnapshots[idx], null, '  '));
+}
+function previewSnapshot(idx) {
+  alert(JSON.stringify(windowsSnapshots[idx], null, '  '));
 }
